@@ -9,11 +9,33 @@
     <title>Parcialito</title>
 </head>
 <body>
-    <div id='container'>
-        <form id="form">
-            <button>Cargar Contactos</button>
+    <form id="form">
+        <button id="btn">Cargar Contactos</button>
+    </form>
+    <div id='container'>       
+        <table id="tabla">
+            
+        </tbody>
+    </div>
+
+    
+    <div id="edit" >
+        <form id="menu">
+            <label for="name" hidden></label>
+            <input type="text" name="id" id="id" hidden>
+            <label for="name">Nombre</label>
+            <input type="text" name="nombre" id="nombre">
+            <label for="name">Apellido</label>
+            <input type="text" name="apellido" id="apellido" >
+            <label for="name">Fecha</label>
+            <input type="text" name="fecha" id="fecha">
+            <label for="name">Sexo</label>
+            <input type="text" name="sexo" id="sexo">
+
+            <button>Modificar</button>
         </form>
     </div>
+     
 </body>
 <script src="./js/archivos.js"></script>
 </html>

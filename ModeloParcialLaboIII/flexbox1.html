@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #contenedor1 {
+            display:flex;
+            background-color: rgb(219, 66, 66);
+            height: 400px;
+            
+
+
+        }
+
+        #contenedor1 div {
+            border:1px solid black;
+        
+            padding:1rem;
+        }
+        /*flex-direction*/
+        .row{
+            flex-direction: row;
+        }
+
+        .column{
+            flex-direction: column;
+        }
+
+        .row-reverse{
+            flex-direction: row-reverse;
+        }
+
+        .column-reverse{
+            flex-direction: column-reverse;
+        }
+
+
+        /*justify-content*/
+        .flex-start{
+            justify-content: flex-start;
+        }
+
+        .flex-end{
+            justify-content: flex-end;
+        }
+
+        .center{
+            justify-content: center;
+        }
+
+        .space-between{
+            justify-content: space-between;
+        }
+        .space-around{
+            justify-content: space-around;
+        }
+
+        /*align-items*/
+        .stretchA{
+            align-items: stretch;
+        }
+
+        .flex-startA{
+            align-items: flex-start;
+        }
+
+        .centerA{
+            align-items: center;
+        }
+
+        .flex-endA{
+            align-items: flex-end;
+        }
+        .baselineA{
+            align-items: baseline;
+        }
+
+
+        /*wra*/
+        #contenedor2{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-content:flex-start;
+            
+            background-color: #000;  
+            height: 100vh;
+            color:white;
+            font-size:2rem;
+        }
+        .dWra{
+            background-color: #0078A6;
+            width:150px;
+            height:150px;
+        }
+
+
+        #contGrow{
+            display: flex;
+            background-color: #000;  
+            height: 100vh;
+            color:white;
+            font-size:2rem;
+        }
+        #contGrow div{
+            background-color: #0084B6;
+            border: solid black;
+        }
+
+    </style>
+    <script>
+        function changeValue(){
+            var cont = document.getElementById("contenedor1");
+            var select =document.getElementById("selecDirection");
+            var selectCont =document.getElementById("selecContent");
+            var selecAlign =document.getElementById("selecAlign");
+            
+            
+            cont.className =select.value+" "+selectCont.value+" "+selecAlign.value;
+            var div1 = document.getElementById("div1");
+            var div2 = document.getElementById("div2");
+            var div3 = document.getElementById("div3");
+            div1.innerHTML ="Caja 1";
+            div2.innerHTML ="Caja 2";
+            div3.innerHTML ="Caja 3";
+        }
+
+        function cambiarGrow(e){
+            var num =e.target.value;
+            var div =e.target.parentNode;
+            div.style ="flex-grow: "+num;
+
+        }
+
+    </script>
+</head>
+<body >
+    <div id="contenedor1">
+            <div id="div1">"1-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</div>
+            <div id="div2">"2-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."</div>
+            <div id="div3">"3-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</div>
+    </div>
+    
+    
+    <hr>
+    <span>flex-direction:</span>
+    <select id="selecDirection" onchange="changeValue()">
+            <option>row</option>
+            <option>column</option>
+            <option>row-reverse</option>
+            <option>column-reverse</option>                                
+    </select>
+    <hr>
+    <span>justify-content:</span>
+    <select id="selecContent" onchange="changeValue()">
+            <option>flex-start</option>
+            <option>flex-end</option>
+            <option>center</option>
+            <option>space-between</option>   
+            <option>space-around</option>   
+                                         
+    </select>
+    <hr>
+    <span>align-items:</span>
+    <select id="selecAlign" onchange="changeValue()">
+            <option value="stretchA">stretch</option>
+            <option value="flex-startA">flex-start</option>
+            <option value="centerA">center</option>
+            <option value="flex-endA">flex-end</option>   
+            <option value="baselineA">baseline</option>   
+                                         
+    </select>
+     
+
+
+<hr>
+    <div id="contenedor2">
+        <div class="dWra">1</div>
+        <div class="dWra">2</div>
+        <div class="dWra">3</div>
+        <div class="dWra">4</div>
+        <div class="dWra">5</div>
+        <div class="dWra">6</div>
+        <div class="dWra">7</div>
+        <div class="dWra">8</div>        
+</div>
+<hr>
+<div id="contGrow">
+    <div >Caja 1
+        <br>
+        <input type="number" onchange="cambiarGrow(event)">
+    </div>
+    <div >Caja 2
+            <br>
+        <input  type="number" onchange="cambiarGrow(event)">
+    </div>
+    <div >Caja 3
+            <br>
+        <input type="number" onchange="cambiarGrow(event)">
+    </div>
+  </div>
+</body>
+</html>

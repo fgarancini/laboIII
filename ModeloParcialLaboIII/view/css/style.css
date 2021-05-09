@@ -5,3 +5,66 @@ main {
   grid-template-columns: 200px 200px 200px;
   grid-template-rows: 150px 150px;
 }
+
+#container
+{
+  display: flex;
+  margin-top: 2.5rem;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.row{
+  flex-direction: row;
+}
+
+.column{
+  flex-direction: column;
+}
+
+tr:hover{
+  background-color: antiquewhite;
+}
+.EditTable td
+{
+  margin-right: auto;
+
+}
+#edit
+{
+
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+#menu
+{
+  display: flex;
+}
+#div-test
+{
+  background-color: black;
+  width: auto;
+  height: 5px;
+  margin: auto;
+}
+.tabla
+{
+  width: 50%;
+  margin-right: 0;
+  position: absolute;
+  box-sizing: border-box;
+  margin-right: 0;
+}
+.conError
+{
+    border: 1px /*ancho*/ solid /*caracteristica*/ red;
+}
+.sinError
+{
+    border: 1px /*ancho*/ solid /*caracteristica*/ white;
+}
+
+th:first-child, td:first-child {
+  display: none;
+  padding-left: 0;
+}
