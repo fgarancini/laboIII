@@ -290,7 +290,7 @@ app.post("/eliminar",function(req,res){
           }
       }
         res.send({'type': 'error'});
-    },8000);
+    },2000);
     
 });
 

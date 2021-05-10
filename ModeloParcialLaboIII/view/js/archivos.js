@@ -23,7 +23,8 @@ window.addEventListener("load", (event) => {
   modificarBtn.addEventListener("click", (event) => {
     event.preventDefault();
     let persona = crearUser();
-    if (!validarDatos(persona)) {
+    console.log(persona);
+    if (validarDatos(persona)) {
       let inputs = document.getElementsByTagName('input');
       console.log(inputs);
       for (let i = 0; i < inputs.length; i++) {
@@ -40,9 +41,8 @@ window.addEventListener("load", (event) => {
 
   eliminarBtn.addEventListener("click", (event) => {
     event.preventDefault();
-    let persona = crearUser();
+    let persona = crearUser();    
     EliminarPersona(api_url_delete, persona, tabla);
-
   });
 });
 
@@ -73,6 +73,7 @@ function EliminarPersona(api, persona, tabla) {
       return console.log(p);
     })
     .catch((err) => console.log(err));
+  cleanInput();
 }
 
 function ModificarContacto(api, persona, tabla) {
@@ -92,6 +93,8 @@ function ModificarContacto(api, persona, tabla) {
       console.log(p);
     })
     .catch((err) => console.log(err));
+  cleanInput();
+
 }
 
 function CargarContactos(api, tabla) {
@@ -120,17 +123,11 @@ function crearUser() {
 
 }
 function cleanInput() {
-  let id = $("id");
-  let n = $("nombre");
-  let a = $("apellido");
-  let f = $("fecha");
-  let s = $("sexo");
-
-  id.value = "";
-  n.value = "";
-  a.value = "";
-  f.value = "";
-  s.value = "";
+  let inputs = document.getElementsByTagName('input');
+  for (let i = 0; i < inputs.length; i++) {
+    const element = inputs[i];
+    element.value = "";
+  }
 }
 function Spinner() {
   let spinner = $("loader");
@@ -150,10 +147,10 @@ function load() {
 }
 
 function validarDatos(user) {
-    return user.id.trim() == "" &&
-    user.nombre.trim() == "" &&
-    user.apellido.trim() == "" &&
-    user.fecha.trim() == "" &&
+    return user.id.trim() == "" ||
+    user.nombre.trim() == "" ||
+    user.apellido.trim() == "" ||
+    user.fecha.trim() == "" ||
     user.sexo.trim() == "";
 }
 function loadForm(childs) {
