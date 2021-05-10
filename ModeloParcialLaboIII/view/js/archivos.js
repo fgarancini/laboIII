@@ -1,72 +1,98 @@
-
 const api_url_info = "http://localhost:3000/personas";
 const api_url_edit = "http://localhost:3000/editar";
-const form = $("form");
-let div = $("edit");
-const formModificar = $("menu");
-div.hidden = true;
-div.style.display = "none";
+const api_url_delete = "http://localhost:3000/eliminar";
 
+const eliminarBtn = $("eliminar");
+const modificarBtn = $("modificar");
+const cargarBtn = $("cargar");
+
+const formModificar = $("menu");
+const div = $("edit-menu");
+
+div.style.display = "none";
 
 window.addEventListener("load", (event) => {
   event.preventDefault();
   const tabla = $("tabla");
-  form.addEventListener("submit", (event) => {
+
+  cargarBtn.addEventListener("click", (event) => {
     event.preventDefault();
-    CargarContactos(api_url_info, tabla);
+    refresh(tabla);
   });
 
-  formModificar.addEventListener("submit", (event) => {
+  modificarBtn.addEventListener("click", (event) => {
     event.preventDefault();
+    let persona = crearUser();
+    if (!validarDatos(persona)) {
+      let inputs = document.getElementsByTagName('input');
+      console.log(inputs);
+      for (let i = 0; i < inputs.length; i++) {
+        const element = inputs[i];
+        if (element.value == "") {
+          element.className = 'conError';
+        }
+      }
+    }
+    else{
+      ModificarContacto(api_url_edit,persona,tabla);
+    }
+  });
 
-    let id = $("id");
-    let n = $("nombre");
-    let a = $("apellido");
-    let f = $("fecha");
-    let s = $("sexo");
+  eliminarBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    let persona = crearUser();
+    EliminarPersona(api_url_delete, persona, tabla);
 
-    let persona = {
-      id: id.placeholder,
-      nombre: n.value,
-      apellido: a.value,
-      fecha: f.value,
-      sexo: s.value,
-    };
-    console.log(persona);
-    fetch(api_url_edit, {
-      method: "POST",
-      body:JSON.stringify(persona),
-      headers: {
-        "content-type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then(p => {
-        btn.disabled = false
-        console.log(p);
-      })
-      .catch((err) => console.log(err));
   });
 });
-
 
 tabla.addEventListener("dblclick", (event) => {
-  div.style.display = "flex";
-
   let p = event.target.parentNode;
   let childs = p.children;
-
-  let id = $("id");
-  let n = $("nombre");
-  let a = $("apellido");
-  let f = $("fecha");
-  let s = $("sexo");
-  id.placeholder = childs[0].innerText;
-  n.placeholder = childs[1].innerText;
-  a.placeholder = childs[2].innerText;
-  f.placeholder = childs[3].innerText;
-  s.placeholder = childs[4].innerText;
+  loadForm(childs);
 });
+
+function refresh(tabla) {
+  tabla.innerHTML = "";
+  CargarContactos(api_url_info, tabla);
+}
+
+function EliminarPersona(api, persona, tabla) {
+  Spinner();
+  fetch(api, {
+    method: "POST",
+    body: JSON.stringify(persona),
+    headers: {
+      "content-type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((p) => {
+      refresh(tabla);
+      load();
+      return console.log(p);
+    })
+    .catch((err) => console.log(err));
+}
+
+function ModificarContacto(api, persona, tabla) {
+  Spinner();
+  fetch(api, {
+    method: "POST",
+    body: JSON.stringify(persona),
+    headers: {
+      "content-type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((p) => {
+      refresh(tabla);
+      load();
+      cargarBtn.disabled = false;
+      console.log(p);
+    })
+    .catch((err) => console.log(err));
+}
 
 function CargarContactos(api, tabla) {
   fetch(api, {
@@ -74,17 +100,83 @@ function CargarContactos(api, tabla) {
   })
     .then((response) => response.json())
     .then((p) => {
-      btn.disabled = true;
+      cargarBtn.disabled = true;
       return Tabla(tabla, p);
     })
     .catch((err) => console.log(err));
 }
-function validarDatos() {
+function crearUser() {
+  let formData = new FormData(formModificar);
+
+  let persona = {
+    id: formData.get("id").toString(),
+    nombre: formData.get("nombre").toString(),
+    apellido: formData.get("apellido").toString(),
+    fecha: formData.get("fecha").toString(),
+    sexo: formData.get("sexo").toString(),
+  };
+
+  return persona;
+
+}
+function cleanInput() {
+  let id = $("id");
   let n = $("nombre");
   let a = $("apellido");
   let f = $("fecha");
   let s = $("sexo");
+
+  id.value = "";
+  n.value = "";
+  a.value = "";
+  f.value = "";
+  s.value = "";
 }
+function Spinner() {
+  let spinner = $("loader");
+  let menu = $("edit-menu");
+  let tabla = $("tabla");
+  spinner.style.display = "block";
+  tabla.style.display = "none";
+  menu.style.display = "none";
+}
+function load() {
+  let spinner = $("loader");
+  let menu = $("edit-menu");
+  let tabla = $("tabla");
+  spinner.style.display = "none";
+  tabla.style.display = "flex";
+  menu.style.display = "flex";
+}
+
+function validarDatos(user) {
+    return user.id.trim() == "" &&
+    user.nombre.trim() == "" &&
+    user.apellido.trim() == "" &&
+    user.fecha.trim() == "" &&
+    user.sexo.trim() == "";
+}
+function loadForm(childs) {
+  div.style.display = "flex";
+  div.style.flexDirection = "column";
+
+  let id = $("id");
+  let n = $("nombre");
+  let a = $("apellido");
+  let f = $("fecha");
+  let s = $("sexo");
+
+  id.value = childs[0].innerText;
+  n.value = childs[1].innerText;
+  a.value = childs[2].innerText;
+  f.value = childs[3].innerText;
+  s.value = childs[4].innerText;
+}
+/**
+ *
+ * @param {Object} obj Tabla que va a contener los apendices
+ * @param {Array} arr Todos los datos
+ */
 function Tabla(obj, arr) {
   let headTable = Object.keys(arr[0]);
   console.log(headTable);
@@ -96,7 +188,11 @@ function Tabla(obj, arr) {
 
   obj.appendChild(tabla);
 }
-
+/**
+ *
+ * @param {Array} heads cabezales de las tablas
+ * @returns Cabecera de tablas
+ */
 function THeaders(heads) {
   let thead = Create("thead");
   for (let j = 0; j < heads.length; j++) {
@@ -110,6 +206,12 @@ function THeaders(heads) {
   return thead;
 }
 
+/**
+ *
+ * @param {Array} arr contiene todos los elementos a ser agregados al body
+ * @returns un cuerpo de una tabla con todas las lineas
+ */
+
 function TBody(arr) {
   let tbody = Create("tbody");
   tbody.id = "tbody";
@@ -118,33 +220,53 @@ function TBody(arr) {
     trow.className = "row";
     let data = Object.keys(arr[i]);
     data.forEach((el) => {
-      trow.appendChild(Td(arr[i][el], data));
+      trow.appendChild(Td(arr[i][el]));
     });
     tbody.appendChild(trow);
   }
   return tbody;
 }
-
-function Td(el, data) {
+/**
+ *
+ * @param {*} el texto en la linea
+ * @returns
+ */
+function Td(el) {
   let td = Create("td");
   td.appendChild(TxtNode(el));
   return td;
 }
-
+/**
+ *
+ * @param {*} el Crea el texto del nodo a ser apendizado
+ * @returns
+ */
 function TxtNode(el) {
   return document.createTextNode(el);
 }
+
+/**
+ *
+ * @param {*} el Crear etiqueta html
+ * @returns etiqueta html
+ */
 function Create(el) {
   return document.createElement(el);
 }
+
+/**
+ *
+ * @param {} id get element by id
+ * @returns element
+ */
 function $(id) {
   return document.getElementById(id);
 }
 
 function borrar(event) {
-  let el = event.target;
-  console.log(el.parentNode);
-  $("tbody").removeChild(el.parentNode);
+  let el = event;
+  console.log(el);
+  $("tbody").removeChild(el);
 }
 
 traerPersonas = (p) => {

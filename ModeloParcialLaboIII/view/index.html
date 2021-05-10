@@ -9,19 +9,18 @@
     <title>Parcialito</title>
 </head>
 <body>
-    <form id="form">
-        <button id="btn">Cargar Contactos</button>
-    </form>
+        <button id="cargar">Refresh</button>
+
     <div id='container'>       
         <table id="tabla">
-            
         </tbody>
     </div>
 
-    
-    <div id="edit" >
-        <form id="menu">
-            <label for="name" hidden></label>
+    <div class="loader" id="loader"></div>
+
+    <div id="edit-menu" >
+        <form id="menu" hidden>
+            <label for="name" ></label>
             <input type="text" name="id" id="id" hidden>
             <label for="name">Nombre</label>
             <input type="text" name="nombre" id="nombre">
@@ -32,7 +31,8 @@
             <label for="name">Sexo</label>
             <input type="text" name="sexo" id="sexo">
 
-            <button>Modificar</button>
+            <button id="modificar">Modificar</button>
+            <button id="eliminar">Eliminar</button>
         </form>
     </div>
      
