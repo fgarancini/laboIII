@@ -23,10 +23,8 @@ window.addEventListener("load", (event) => {
   modificarBtn.addEventListener("click", (event) => {
     event.preventDefault();
     let persona = crearUser();
-    console.log(persona);
     if (validarDatos(persona)) {
       let inputs = document.getElementsByTagName('input');
-      console.log(inputs);
       for (let i = 0; i < inputs.length; i++) {
         const element = inputs[i];
         if (element.value == "") {
@@ -57,42 +55,69 @@ function refresh(tabla) {
   CargarContactos(api_url_info, tabla);
 }
 
-function EliminarPersona(api, persona, tabla) {
+async function EliminarPersona(api, persona, tabla) {
+
   Spinner();
-  fetch(api, {
+  const res = await fetch(api,{
     method: "POST",
     body: JSON.stringify(persona),
     headers: {
       "content-type": "application/json",
     },
-  })
-    .then((response) => response.json())
-    .then((p) => {
-      refresh(tabla);
-      load();
-      return console.log(p);
-    })
-    .catch((err) => console.log(err));
+  });
+  refresh(tabla);
+  load();
+  const json = await res.json();
+
+  console.log(json);
+  // fetch(api, {
+  //   method: "POST",
+  //   body: JSON.stringify(persona),
+  //   headers: {
+  //     "content-type": "application/json",
+  //   },
+  // })
+  //   .then((response) => response.json())
+  //   .then((p) => {
+  //     refresh(tabla);
+  // load();
+  //     return;
+  //   })
+  //   .catch((err) => console.log(err));
   cleanInput();
 }
 
-function ModificarContacto(api, persona, tabla) {
+async function ModificarContacto(api, persona, tabla) {
   Spinner();
-  fetch(api, {
+  const res = await fetch(api, {
     method: "POST",
     body: JSON.stringify(persona),
     headers: {
       "content-type": "application/json",
-    },
+    }
   })
-    .then((response) => response.json())
-    .then((p) => {
-      refresh(tabla);
-      load();
-      cargarBtn.disabled = false;
-      console.log(p);
-    })
-    .catch((err) => console.log(err));
+  .catch(err => console.log(err));
+
+  cargarBtn.disabled = false;
+  refresh(tabla);
+  load();
+  const json = await res.json();
+  console.log(json);
+  // fetch(api, {
+  //   method: "POST",
+  //   body: JSON.stringify(persona),
+  //   headers: {
+  //     "content-type": "application/json",
+  //   },
+  // })
+  //   .then((response) => response.json())
+  //   .then((p) => {
+  //     refresh(tabla);
+  //     load();
+  //     cargarBtn.disabled = false;
+  //     return;
+  //   })
+  //   .catch((err) => console.log(err));
   cleanInput();
 
 }
@@ -176,7 +201,7 @@ function loadForm(childs) {
  */
 function Tabla(obj, arr) {
   let headTable = Object.keys(arr[0]);
-  console.log(headTable);
+  // console.log(headTable);
   // headTable.shift();
   tabla = Create("table");
 
@@ -196,7 +221,7 @@ function THeaders(heads) {
     let th = Create("th");
     th.className = "col";
     th.id = heads[j];
-    console.log(heads[j]);
+    // console.log(heads[j]);
     th.appendChild(TxtNode(heads[j]));
     thead.appendChild(th);
   }
