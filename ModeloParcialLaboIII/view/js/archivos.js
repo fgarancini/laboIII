@@ -1,6 +1,6 @@
-const api_url_info = "http://localhost:3000/personas";
-const api_url_edit = "http://localhost:3000/editar";
-const api_url_delete = "http://localhost:3000/eliminar";
+const api_url_info = "http://localhost:3030/personas";
+const api_url_edit = "http://localhost:3030/editar";
+const api_url_delete = "http://localhost:3030/eliminar";
 
 const eliminarBtn = $("eliminar");
 const modificarBtn = $("modificar");
@@ -196,7 +196,7 @@ function loadForm(childs) {
 }
 /**
  *
- * @param {Object} obj Tabla que va a contener los apendices
+ * @param {HTMLElement} obj Tabla que va a contener los apendices
  * @param {Array} arr Todos los datos
  */
 function Tabla(obj, arr) {
@@ -211,8 +211,8 @@ function Tabla(obj, arr) {
   obj.appendChild(tabla);
 }
 /**
- *
- * @param {Array} heads cabezales de las tablas
+ * Cabezales de las tablas
+ * @param {Array} heads 
  * @returns Cabecera de tablas
  */
 function THeaders(heads) {
@@ -229,9 +229,9 @@ function THeaders(heads) {
 }
 
 /**
- *
- * @param {Array} arr contiene todos los elementos a ser agregados al body
- * @returns un cuerpo de una tabla con todas las lineas
+ * Crea un cuerpo de una tabla con todas las lineas
+ * @param {Array} arr 
+ * @returns 
  */
 
 function TBody(arr) {
@@ -249,8 +249,8 @@ function TBody(arr) {
   return tbody;
 }
 /**
- *
- * @param {*} el texto en la linea
+ * texto en la linea
+ * @param {String} el 
  * @returns
  */
 function Td(el) {
@@ -259,8 +259,8 @@ function Td(el) {
   return td;
 }
 /**
- *
- * @param {*} el Crea el texto del nodo a ser apendizado
+ * Crea el texto del nodo a ser apendizado
+ * @param {String} el 
  * @returns
  */
 function TxtNode(el) {
@@ -268,8 +268,8 @@ function TxtNode(el) {
 }
 
 /**
- *
- * @param {*} el Crear etiqueta html
+ * Crear etiqueta html
+ * @param {HTMLElement} el 
  * @returns etiqueta html
  */
 function Create(el) {
@@ -277,8 +277,8 @@ function Create(el) {
 }
 
 /**
- *
- * @param {} id get element by id
+ * get element by id
+ * @param {HTMLElement} id 
  * @returns element
  */
 function $(id) {
